@@ -45,7 +45,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 					<td>@@to_see_the_resource@@</td>
 				</tr>
 				<tr>
-					<td>@@for_saml_users@@<a><xsl:attribute name="href"><xsl:value-of select="notification_data/download_url_saml" /></xsl:attribute>Access your item</a></td>
+					<td><a><xsl:attribute name="href"><xsl:value-of select="notification_data/download_url_saml" /></xsl:attribute>@@click_here@@</a></td>
 				</tr>
 				<tr>
           <!-- INSERT NOTE FROM ALMA ATTACHMENT -->
@@ -53,7 +53,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
         </tr>
         <tr>  
           <!-- INSERT URL FROM ALMA ATTACHMENT -->
-          <td><a><xsl:attribute name="href"><xsl:value-of select="notification_data/url_list/string"/></xsl:attribute>Access your item</a></td>
+          <td><a><xsl:attribute name="href"><xsl:value-of select="notification_data/url_list/string"/></xsl:attribute>@@click_here@@</a></td>
         </tr>
         <tr>
 					<td>@@max_num_of_views@@</td>
