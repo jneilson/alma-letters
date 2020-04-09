@@ -51,7 +51,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
           <!-- INSERT NOTE FROM ALMA ATTACHMENT -->
           <td><xsl:value-of select="notification_data/attachments_notes_list/string"/></td>
           <!-- INSERT URL FROM ALMA ATTACHMENT -->
-          <td><a><xsl:attribute name="href"><xsl:value-of select="notification_data/url_list/string"/></a></td>
+          <td><a><xsl:attribute name="href"><xsl:value-of select="notification_data/url_list/string"/></xsl:attribute></a></td>
         </tr>
         <tr>
 					<td>@@max_num_of_views@@</td>
