@@ -44,9 +44,16 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 				<tr>
 					<td>@@to_see_the_resource@@</td>
 				</tr>
-				<tr>
-					<td><a><xsl:attribute name="href"><xsl:value-of select="notification_data/download_url_saml" /></xsl:attribute>@@click_here@@</a></td>
-				</tr>
+				
+        <!-- DISPLAY THE STANDARD LINK TO FILE ONLY IF THERE IS ONE -->
+        <xsl:if notification_data/download_url_saml !="">
+        
+          <tr>
+            <td><a><xsl:attribute name="href"><xsl:value-of select="notification_data/download_url_saml" /></xsl:attribute>@@click_here@@</a></td>
+          </tr>
+
+        </xsl:if>
+
 				<tr>
           <!-- INSERT NOTE FROM ALMA ATTACHMENT -->
           <td><xsl:value-of select="notification_data/attachments_notes_list/string"/></td>
