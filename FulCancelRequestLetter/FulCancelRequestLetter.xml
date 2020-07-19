@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:include href="header.xsl" />
+	<xsl:include href="senderReceiver.xsl" />
+	<xsl:include href="mailReason.xsl" />
+	<xsl:include href="footer.xsl" />
+	<xsl:include href="style.xsl" />
+	<xsl:include href="recordTitle.xsl" />
+	<xsl:template match="/">
+		<html>
+			<head>
+				
+				<xsl:call-template name="generalStyle" />
+				
+				
+			</head>
+			<body>
+			
+			<!-- VARIABLES FOR INSTITUTIONAL CANCELATION -->
+			
+				<!-- pull the institution's Primo base url from the 'on' field in the code table -->
+				<xsl:variable name="primo">
+					<xsl:text>@@on@@</xsl:text>
+				</xsl:variable>
+				<xsl:variable name="iz_title" select="notification_data/phys_item_display/title" />
+				<xsl:variable name="iz_author" select="notification_data/phys_item_display/author" />
+				
+			<!-- VARIABLES FOR RS CANCELATION -->
+			
+				<!-- pull the institution's ILLiad base url from the 'detailed_below' field in the code table -->
+				<xsl:variable name="illiad">
+					<xsl:text>@@detailed_below@@</xsl:text>
+				</xsl:variable>
+				<xsl:variable name="rs_genre" select="notification_data/metadata/material_type" />
+				<xsl:variable name="rs_title" select="notification_data/metadata/title" />
+				<xsl:variable name="rs_pubdate" select="notification_data/metadata/publication_date" />
+				<xsl:variable name="rs_edition" select="notification_data/metadata/edition" />
+				<xsl:variable name="rs_isbn" select="notification_data/metadata/isbn" />
+				<xsl:variable name="rs_author" select="notification_data/metadata/author" />
+				<xsl:variable name="rs_publisher" select="notification_data/metadata/publisher" />
+				<xsl:variable name="rs_place" select="notification_data/metadata/place_of_publication" />
+				<xsl:variable name="rs_doi" select="notification_data/metadata/doi" />
+				<xsl:variable name="rs_oclc" select="notification_data/metadata/oclc_number" />
+				<xsl:variable name="rs_source" select="notification_data/metadata/source" />
+			
+				<xsl:attribute name="style">
+				<xsl:call-template name="bodyStyleCss" /> <!-- style.xsl -->
+			</xsl:attribute>
+				<xsl:call-template name="head" /> <!-- header.xsl -->
+				<xsl:call-template name="toWhomIsConcerned" /> <!-- mailReason.xsl -->
+
+				<div class="messageArea">
+					<div class="messageBody">
+
+						<p>@@we_cancel_y_req_of@@</p>
+						
+						<!-- DISPLAY TITLE INFO IF RS REQUEST -->
+						<xsl:if test="notification_data/request/resource_sharing_request_id != ''">
+							<p>
+								<b><xsl:value-of select="notification_data/metadata/title" /></b>
+								<br />
+								By: <xsl:value-of select="notification_data/metadata/author" />
+							</p>
+						</xsl:if>
+						
+						<!-- DISPLAY TITLE IF INSTITUTIONAL REQUEST -->
+						<xsl:if test="notification_data/request/resource_sharing_request_id = ''">
+							<p>
+								<b><xsl:value-of select="/notification_data/phys_item_display/title_abcnph" /></b>
+							</p>
+						</xsl:if>
+						
+						<!-- DISPLAY REASON FOR CANCELATION -->
+						<p>
+							<b>@@reason_deleting_request@@:</b>
+							<br />
+							<xsl:value-of select="notification_data/request/status_note_display" />
+						</p>
+						
+						<!-- DISPLAY CANCELATION NOTES -->
+						<p>
+							<b>@@request_cancellation_note@@:</b>
+							<xsl:value-of select="notification_data/request/cancel_reason" />
+						</p>
+
+						<!-- SHOW PRIMO LINK IF INSTITUTIONAL CANCELATION -->
+						<xsl:if test="notification_data/request/resource_sharing_request_id = ''">
+						
+							<p>
+							
+								<a href="{$primo}{$iz_title}">Click here</a> to find this item in another CLIC library.
+							
+							</p>
+						
+						</xsl:if>
+						
+						<!-- SHOW ILL LINK IF RS CANCELATION -->
+						<xsl:if test="notification_data/request/resource_sharing_request_id != ''">
+
+							<p>
+							<a href="{$illiad}&amp;rft.genre={$rs_genre}&amp;rft.title={$rs_title}&amp;rft.date={$rs_pubdate}&amp;rft.edition={$rs_edition}&amp;rft.isbn={$rs_isbn}&amp;rft.au={$rs_author}&amp;rft.publisher={$rs_publisher}&amp;rft.place={$rs_place}&amp;rft.doi={$rs_doi}&amp;rfe_dat={$rs_oclc}&amp;rfr_id={$rs_source}">Click here</a> to request this item via interlibrary loan.
+							</p>
+
+						</xsl:if>
+
+<table>
+
+							<tr>
+								<td>@@sincerely@@</td>
+							</tr>
+							<tr>
+								<td>@@department@@</td>
+							</tr>
+
+						</table>
+					</div>
+				</div>
+				<xsl:call-template name="lastFooter" /> <!-- footer.xsl -->
+				<xsl:call-template name="contactUs" />
+			</body>
+		</html>
+	</xsl:template>
+</xsl:stylesheet>
