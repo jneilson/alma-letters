@@ -84,26 +84,8 @@
 							<xsl:value-of select="notification_data/request/cancel_reason" />
 						</p>
 
-						<!-- SHOW PRIMO LINK IF INSTITUTIONAL CANCELATION -->
-						<xsl:if test="notification_data/request/resource_sharing_request_id = ''">
-						
-							<p>
-							
-								<a href="{$primo}{$iz_title}">Click here</a> to find this item in another CLIC library.
-							
-							</p>
-						
-						</xsl:if>
-						
-						<!-- SHOW ILL LINK IF RS CANCELATION -->
-						<xsl:if test="notification_data/request/resource_sharing_request_id != ''">
-
-							<p>
-							<a href="{$illiad}&amp;rft.genre={$rs_genre}&amp;rft.title={$rs_title}&amp;rft.date={$rs_pubdate}&amp;rft.edition={$rs_edition}&amp;rft.isbn={$rs_isbn}&amp;rft.au={$rs_author}&amp;rft.publisher={$rs_publisher}&amp;rft.place={$rs_place}&amp;rft.doi={$rs_doi}&amp;rfe_dat={$rs_oclc}&amp;rfr_id={$rs_source}">Click here</a> to request this item via interlibrary loan.
-							</p>
-
-						</xsl:if>
-
+						<!-- FOLLOW UP MESSAGE -->
+                        <p><b>Still interested in this resource? Please reply to this email to talk with a librarian about your request. We may be able to request this material from another library.<b></p>
 <table>
 
 							<tr>
